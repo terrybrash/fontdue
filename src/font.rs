@@ -107,11 +107,14 @@ pub struct LineMetrics {
     /// A precalculated value for the height or width of the line depending on if the font is laid
     /// out horizontally or vertically. It's calculated by: ascent - descent + line_gap.
     pub new_line_size: f32,
+
+    pub cap: f32,
+    pub corpus: f32,
 }
 
 impl LineMetrics {
     /// Creates a new line metrics struct and computes the new line size.
-    fn new(ascent: i16, descent: i16, line_gap: i16) -> LineMetrics {
+    fn new(ascent: i16, descent: i16, line_gap: i16, cap: i16, corpus: i16) -> LineMetrics {
         // Operations between this values can exceed i16, so we extend to i32 here.
         let (ascent, descent, line_gap) = (ascent as i32, descent as i32, line_gap as i32);
         LineMetrics {
@@ -119,6 +122,8 @@ impl LineMetrics {
             descent: descent as f32,
             line_gap: line_gap as f32,
             new_line_size: (ascent - descent + line_gap) as f32,
+            cap: cap as f32,
+            corpus: corpus as f32,
         }
     }
 
@@ -130,6 +135,8 @@ impl LineMetrics {
             descent: self.descent * scale,
             line_gap: self.line_gap * scale,
             new_line_size: self.new_line_size * scale,
+            cap: self.cap * scale,
+            corpus: self.corpus * scale,
         }
     }
 }
@@ -309,13 +316,20 @@ impl Font {
         }
 
         // New line metrics.
-        let horizontal_line_metrics =
-            Some(LineMetrics::new(face.ascender(), face.descender(), face.line_gap()));
+        let horizontal_line_metrics = Some(LineMetrics::new(
+            face.ascender(),
+            face.descender(),
+            face.line_gap(),
+            face.capital_height().unwrap_or(0),
+            face.x_height().unwrap_or(0),
+        ));
         let vertical_line_metrics = if let Some(ascender) = face.vertical_ascender() {
             Some(LineMetrics::new(
                 ascender,
                 face.vertical_descender().unwrap_or(0),
                 face.vertical_line_gap().unwrap_or(0),
+                0,
+                0,
             ))
         } else {
             None

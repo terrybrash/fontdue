@@ -31,4 +31,4 @@ ttf-parser = { version = "0.25", default-features = false, features = [
     "opentype-layout", "no-std-float"
 ] }
 hashbrown = { version = "0.17", optional = true }
-rayon = { version = "1.10", optional = true }
+rayon = { version = "1.12", optional = true }

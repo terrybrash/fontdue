@@ -4,9 +4,9 @@
  * is safe. Please be aware of this.
  */
 
+use crate::Glyph;
 use crate::math::Line;
 use crate::platform::{abs, as_i32, copysign, f32x4, fract};
-use crate::Glyph;
 use alloc::vec;
 use alloc::vec::*;
 

@@ -1,10 +1,10 @@
+use crate::FontResult;
 use crate::layout::GlyphRasterConfig;
 use crate::math::{Geometry, Line};
 use crate::platform::{as_i32, ceil, floor, fract, is_negative};
 use crate::raster::Raster;
-use crate::table::{load_gsub, TableKern};
+use crate::table::{TableKern, load_gsub};
 use crate::unicode;
-use crate::FontResult;
 use crate::{HashMap, HashSet};
 use alloc::string::String;
 use alloc::vec;
@@ -273,7 +273,7 @@ impl Font {
                     if let Some(mapping) = subtable.glyph_index(codepoint) {
                         if let Some(mapping) = NonZeroU16::new(mapping.0) {
                             indices_to_load.insert(mapping.get());
-                            char_to_glyph.insert(unsafe { mem::transmute::<u32, char>(codepoint) }, mapping);
+                            char_to_glyph.insert(unsafe { char::from_u32_unchecked(codepoint) }, mapping);
                         }
                     }
                 })

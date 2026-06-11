@@ -10,7 +10,7 @@ description = "A simple no_std font parser and rasterizer."
 keywords = ["font", "text", "truetype", "opentype", "ttf"]
 categories = ["no-std", "gui"]
 readme = "README.md"
-edition = "2018"
+edition = "2024"
 exclude = ["dev/**"]
 
 [badges]

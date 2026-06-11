@@ -1,10 +1,10 @@
 pub use crate::unicode::CharacterData;
 
-use crate::unicode::{read_utf8, LinebreakData, Linebreaker, LINEBREAK_NONE};
 use crate::Font;
+use crate::unicode::{LINEBREAK_NONE, LinebreakData, Linebreaker, read_utf8};
 use crate::{
-    platform::{ceil, floor},
     Metrics,
+    platform::{ceil, floor},
 };
 use alloc::vec::*;
 use core::borrow::Borrow;
